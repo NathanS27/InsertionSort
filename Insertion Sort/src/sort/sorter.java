@@ -12,7 +12,14 @@ public class sorter {
 	
 	public void addNum(String str) throws ImproperFormatException {
 		try {
-			ints.add(Integer.parseInt(str));
+			
+			String[] addedNums = str.split(",");
+			for(String numbers:addedNums) {
+				if(ints.size()>24) {
+					throw new ImproperFormatException("Must be less than 25 numbers");
+				}
+				ints.add(Integer.parseInt(numbers));
+			}
 		}
 		catch(NumberFormatException e) {
 			throw new ImproperFormatException("input must be an integer");
@@ -27,5 +34,37 @@ public class sorter {
 	}
 	public void clear() {
 		ints.clear();
+	}
+	
+	private int addNums() {
+		int total=0;
+		for(Integer i:ints) {
+			total+=i;
+		}
+		return total;
+	}
+	
+	public String getMean() {
+		return String.format("%d", addNums()/ints.size());
+	}
+	
+	public String getMedian() {
+		return "nah fam";
+	}
+	
+	public double getMode() {
+		return 69;
+	}
+	
+	public String getSD() {
+		double[] sdArray=new double[ints.size()];
+		for(int i=0;i<ints.size();i++) {
+			sdArray[i]=Math.pow((ints.get(i)-getMode()), 2	);
+		}
+		int total=0;
+		for(Double i:sdArray) {
+			total+=i;
+		}
+		return String.format("%f", Math.pow(total/ints.size(), 2));
 	}
 }

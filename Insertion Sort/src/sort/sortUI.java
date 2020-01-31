@@ -7,7 +7,7 @@ import java.util.*;
 
 public class sortUI extends GBFrame {
 
-	JLabel instructions = addLabel("Enter the numbers seperated by a ',' ", 1, 1, 4, 1);
+	JLabel instructions = addLabel("Enter the numbers seperated by a ' ' ", 1, 1, 4, 1);
 
 	JTextField inputNum = addTextField("", 3, 1, 4, 1);
 
@@ -16,6 +16,7 @@ public class sortUI extends GBFrame {
 	
 	JLabel sortLbl = addLabel("Sorted:",6,1,1,1);
 	JLabel display = addLabel("", 6, 2, 4, 1);
+	JTextArea details= addTextArea("",7,1,3,1);
 
 	JButton add = addButton("add", 4, 1, 1, 1);
 	JButton output = addButton("sort", 4, 2, 1, 1);
@@ -43,6 +44,14 @@ public class sortUI extends GBFrame {
 		else if(buttonObj==clear) {
 			list.clear();
 			inputtedNumbers.setText("");
+		}
+		else if(buttonObj==output) {
+			String str="";
+			str+=String.format("Mean: %s", list.getMean());
+			str+=String.format("\nMedian: %s", list.getMedian());
+			str+=String.format("\nMode: %f", list.getMode());
+			str+=String.format("\nStandard Deviation: %s", list.getSD());
+			details.setText(str);
 		}
 	}
 	
