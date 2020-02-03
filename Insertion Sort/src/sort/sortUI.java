@@ -7,14 +7,13 @@ import java.util.*;
 
 public class sortUI extends GBFrame {
 
-	JLabel instructions = addLabel("Enter the numbers seperated by a ' ' ", 1, 1, 4, 1);
+	JLabel instructions = addLabel("Enter the numbers seperated by a ',' ", 1, 1, 4, 1);
 
 	JTextField inputNum = addTextField("", 3, 1, 4, 1);
 
 	JLabel inputNumlbl = addLabel("Inputted Numbers:",5,1,1,1);
 	JLabel inputtedNumbers = addLabel(" ", 5, 2, 4, 1);
 	
-	JLabel sortLbl = addLabel("Sorted:",6,1,1,1);
 	JLabel display = addLabel("", 6, 2, 4, 1);
 	JTextArea details= addTextArea("",7,1,3,1);
 
@@ -32,6 +31,7 @@ public class sortUI extends GBFrame {
 			if (!inputNum.getText().trim().isEmpty()) {
 				try {
 					list.addNum(inputNum.getText());
+					details.setText("");
 				}
 				catch(ImproperFormatException e) {
 					errorMsg(e.getMessage());
@@ -43,14 +43,16 @@ public class sortUI extends GBFrame {
 		} 
 		else if(buttonObj==clear) {
 			list.clear();
+			details.setText("");
 			inputtedNumbers.setText("");
 		}
 		else if(buttonObj==output) {
 			String str="";
-			str+=String.format("Mean: %s", list.getMean());
+			str+=String.format("Mean: %.2f", list.getMean());
 			str+=String.format("\nMedian: %s", list.getMedian());
-			str+=String.format("\nMode: %f", list.getMode());
+			str+=String.format("\nMode: %s", list.getMode());
 			str+=String.format("\nStandard Deviation: %s", list.getSD());
+			str+=String.format("\nList: %s", list.print());
 			details.setText(str);
 		}
 	}
