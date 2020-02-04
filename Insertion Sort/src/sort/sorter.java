@@ -45,45 +45,58 @@ public class sorter {
 	}
 	
 	public double getMean() {
-		return  addNums()/ints.size();
+		return (double)addNums()/ints.size();
 	}
 	
 	public String getMedian() {
 		if(ints.size()%2!=0) {
 			return String.format("%d", ints.get((ints.size()/2)));
 		}
-		return String.format("%f", ((double)ints.get(ints.size()/2)+ints.get((ints.size()/2)-1))/2);
+		return String.format("%.3f", ((double)ints.get(ints.size()/2)+ints.get((ints.size()/2)-1))/2);
 	}
 	
 	public String getMode() {
-		int currentNum=0;
-		ArrayList<Integer>highestNum=new ArrayList<Integer>();
-		int highestCount=0;
+		ArrayList<Integer>mode=new ArrayList<Integer>();
+		int modeCount=2;
 		int count=0;
-		
-		for(int i=0;i<ints.size()-1;i++) {
-			currentNum=ints.get(i);
-			if(ints.get(i+1)==currentNum) {
-				count++;
+		for(int i=0;i<ints.size();i++) {
+			for(int k=0;k<ints.size();k++) {
+				if(ints.get(i).equals(ints.get(k))) {
+					count++;
+					System.out.println("i: "+ints.get(i));
+					System.out.println("k: "+ints.get(k));
+					System.out.println("modeCount: "+modeCount);
+					System.out.println("Count: "+count);
+					System.out.println("");
+				}
 			}
-			if(count==highestCount) {
-				highestNum.add(ints.get(i));
-				System.out.println(highestNum.toString()+":::added");
-				highestCount=count;
-			}
-			else if(count>highestCount) {
-				System.out.println(highestNum.toString()+":::");
-				highestNum.clear();
-				System.out.println(highestNum.toString()+":::cleared");
-				highestNum.add(ints.get(i));
-				highestCount=count;
-			}
+			if(count==modeCount) {
+				modeCount=count;
 				count=0;
+				mode.add(ints.get(i));
+			}
+			else if(count>modeCount) {
+				modeCount=count;
+				count=0;
+				mode.clear();
+				mode.add(ints.get(i));
+			}
 		}
-		if(highestCount==0) {
-			return "none";
+
+		if(mode.isEmpty()||ints.size()<2) {
+			return "None";
 		}
-		return highestNum.toString();
+		String str="";
+		for(Integer i:mode) {
+			if(i==mode.get(0)) {
+				str+=String.format("%d", i);
+			}
+			else {
+				str+=String.format(", %d", i);
+			}
+			
+		}
+		return str;
 	}
 	
 	public String getSD() {
@@ -98,7 +111,7 @@ public class sorter {
 			total+=i;
 		}
 		
-		return String.format("%f", Math.sqrt(total/ints.size()));
+		return String.format("%.3f", Math.sqrt(total/ints.size()));
 	}
 	private void sort(){
 		 int holePosition;

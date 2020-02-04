@@ -18,7 +18,6 @@ public class sortUI extends GBFrame {
 	JTextArea details= addTextArea("",7,1,3,1);
 
 	JButton add = addButton("add", 4, 1, 1, 1);
-	JButton output = addButton("sort", 4, 2, 1, 1);
 	JButton clear = addButton("clear", 4, 3, 1, 1);
 
 	sorter list = new sorter();
@@ -31,29 +30,29 @@ public class sortUI extends GBFrame {
 			if (!inputNum.getText().trim().isEmpty()) {
 				try {
 					list.addNum(inputNum.getText());
-					details.setText("");
-				}
-				catch(ImproperFormatException e) {
-					errorMsg(e.getMessage());
-				}
 				inputNum.setText("");
 				inputtedNumbers.setText(list.print());
 				inputNum.grabFocus();
+				String str="";
+				str+=String.format("Mean: %.3f", list.getMean());
+				str+=String.format("\nMedian: %s", list.getMedian());
+				str+=String.format("\nMode: %s", list.getMode());
+				str+=String.format("\nStandard Deviation: %s", list.getSD());
+				str+=String.format("\nList: %s", list.print());
+				details.setText(str);
+				}
+				catch(ImproperFormatException e) {
+					errorMsg(e.getMessage());
+					inputNum.setText("");
+					inputNum.grabFocus();
+				}
 			}
 		} 
 		else if(buttonObj==clear) {
 			list.clear();
 			details.setText("");
 			inputtedNumbers.setText("");
-		}
-		else if(buttonObj==output) {
-			String str="";
-			str+=String.format("Mean: %.2f", list.getMean());
-			str+=String.format("\nMedian: %s", list.getMedian());
-			str+=String.format("\nMode: %s", list.getMode());
-			str+=String.format("\nStandard Deviation: %s", list.getSD());
-			str+=String.format("\nList: %s", list.print());
-			details.setText(str);
+			inputNum.grabFocus();
 		}
 	}
 	
