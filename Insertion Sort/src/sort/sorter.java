@@ -11,8 +11,7 @@ public class sorter {
 	
 	public void addNum(String str) throws ImproperFormatException {
 		try {
-			
-			String[] addedNums = str.split(",");
+			String[] addedNums = str.split(","); // splits inputed numbers by the ,
 			for(String numbers:addedNums) {
 				if(ints.size()>24) {
 					throw new ImproperFormatException("Must be less than 25 numbers");
@@ -25,6 +24,7 @@ public class sorter {
 		}
 		sort();
 	}
+	
 	public String print() {
 		String str=String.format("%d", ints.get(0));
 		for(int i=1;i<ints.size();i++) {
@@ -32,6 +32,7 @@ public class sorter {
 		}
 		return str;
 	}
+	
 	public void clear() {
 		ints.clear();
 	}
@@ -57,44 +58,35 @@ public class sorter {
 	
 	public String getMode() {
 		ArrayList<Integer>mode=new ArrayList<Integer>();
-		int modeCount=2;
-		int count=0;
-		for(int i=0;i<ints.size();i++) {
-			for(int k=0;k<ints.size();k++) {
-				if(ints.get(i).equals(ints.get(k))) {
+		int modeCount =1;
+		int count;
+		for(int i=0; i<ints.size(); i++) {
+			count=0;
+			for(int j=0; j<ints.size(); j++) { 
+				if(ints.get(i).equals(ints.get(j)) && !mode.contains(ints.get(i))) { 
 					count++;
-					System.out.println("i: "+ints.get(i));
-					System.out.println("k: "+ints.get(k));
-					System.out.println("modeCount: "+modeCount);
-					System.out.println("Count: "+count);
-					System.out.println("");
 				}
 			}
-			if(count==modeCount) {
-				modeCount=count;
-				count=0;
-				mode.add(ints.get(i));
-			}
-			else if(count>modeCount) {
-				modeCount=count;
-				count=0;
+			if(count>modeCount) {
 				mode.clear();
 				mode.add(ints.get(i));
+				modeCount = count;
+			}
+			else if(count==modeCount && modeCount>1) {
+				mode.add(ints.get(i));
 			}
 		}
-
-		if(mode.isEmpty()||ints.size()<2) {
+		if(mode.isEmpty()) {
 			return "None";
 		}
-		String str="";
-		for(Integer i:mode) {
+		String str = "";
+		for(int i : mode) {
 			if(i==mode.get(0)) {
-				str+=String.format("%d", i);
+				str += String.format("%d", i);
 			}
 			else {
-				str+=String.format(", %d", i);
+				str += ", " + String.format("%d", i);
 			}
-			
 		}
 		return str;
 	}
@@ -113,6 +105,7 @@ public class sorter {
 		
 		return String.format("%.3f", Math.sqrt(total/ints.size()));
 	}
+	
 	private void sort(){
 		 int holePosition;
 		 int valueToInsert;
